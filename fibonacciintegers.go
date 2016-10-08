@@ -38,7 +38,7 @@ func comb(iterable []int, r int) [][]int {
 	for {
 		f := false
 		x := 0
-		for i := range rev {
+		for i := 0; i < len(rev); i++ {
 			if indices[i] != i + len(iterable) - r {
                 x = i
                 f = true
@@ -49,44 +49,15 @@ func comb(iterable []int, r int) [][]int {
             return l
 		}
 		indices[x] += 1
-	}
-	/*
-	indices := []int{}
-	temp := []int{}
-	rev := []int{}
-    for i := 0; i < r; i++ {
-		indices = append(indices, i)
-		temp = append(temp, iterable[i])
-	}
-	for i:= range indices {
-		rev = append(rev, indices[r-1-i])
-	}
-    l = append(l, temp)
-    for{
-		x := 0
-		f := false
-        for i := range rev {
-			x = i
-			if indices[i] != i + len(iterable) - r {
-				f = true
-                break
-			}
-        }
-		if !f {
-			return l
+		for j := x + 1; j < r; j++ {
+			indices[j] = indices[j-1] + 1
 		}
-        indices[x] += 1
-        for j := x+1; j < r; j++ {
-            indices[j] = indices[j-1] + 1
+		temp := []int{}
+		for i := 0; i < len(indices); i++ {
+			temp = append(temp, indices[i])
 		}
-		y := []int{}
-		for i := range indices {
-			y = append(y, iterable[i])
-		}
-        l = append(l, y)
+		l = append(l, temp)
 	}
-	*/
-	return l
 }
 
 func main() {
@@ -101,6 +72,6 @@ func main() {
 		}
 		n, _ := strconv.Atoi(fileScanner.Text())
         l := fib(n)
-		fmt.Println(comb(l, 2))
+		fmt.Println(comb(l, 3))
 	}
 }
